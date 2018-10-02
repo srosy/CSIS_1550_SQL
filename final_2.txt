@@ -1,0 +1,400 @@
+mysql> SELECT * FROM quote WHERE quoteName LIKE '%Play%';
+ERROR 1046 (3D000): No database selected
+mysql> USE MOVIE
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> SELECT * FROM quote WHERE quoteName LIKE '%Play%';
+ERROR 1054 (42S22): Unknown column 'quoteName' in 'where clause'
+mysql> SELECT * FROM quote WHERE quoteText LIKE '%Play%';
++---------+----------------------------------------+
+| quoteID | quoteText                              |
++---------+----------------------------------------+
+|       2 | Play it, Sam.  Play "As Time Goes By." |
++---------+----------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> --Question 4
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Question 4' at line 1
+mysql> -- Question 4
+mysql> SELECT roleID, roleName FROM role WHERE roleName LIKE '%Joker%';
++--------+-----------+
+| roleID | roleName  |
++--------+-----------+
+|     97 | The Joker |
++--------+-----------+
+1 row in set (0.00 sec)
+
+mysql> -- Question 5
+mysql> SELECT movieID, title, year, totalNoms, FROM movie WHERE totalNoms > 5 AND year < 1950;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM movie WHERE totalNoms > 5 AND year < 1950' at line 1
+mysql> SELECT movieID, title, year, totalNoms FROM movie WHERE totalNoms > 5 AND year < 1950;
++---------+--------------------+------+-----------+
+| movieID | title              | year | totalNoms |
++---------+--------------------+------+-----------+
+|       2 | Casablanca         | 1943 |         8 |
+|       9 | Gone with the Wind | 1939 |        15 |
++---------+--------------------+------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> --Question 6
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Question 6' at line 1
+mysql> -- Question 6
+mysql> SELECT movieId, title, year, awardsWon FROM movie WHERE awardsWon > 5 OR year > 1990;
++---------+-----------------------------+------+-----------+
+| movieId | title                       | year | awardsWon |
++---------+-----------------------------+------+-----------+
+|       1 | Apollo 13                   | 1995 |         2 |
+|       4 | Few Good Men, A             | 1992 |         0 |
+|       7 | Forrest Gump                | 1994 |         6 |
+|       9 | Gone with the Wind          | 1939 |        10 |
+|      10 | Jerry Maguire               | 1996 |         1 |
+|      12 | Sixth Sense, The            | 1999 |         0 |
+|      15 | Terminator 2:  Judgment Day | 1991 |         4 |
+|      18 | Mrs. Doubtfire              | 1993 |         1 |
+|      20 | Batman Returns              | 1992 |         0 |
+|      21 | Batman Forever              | 1995 |         0 |
+|      22 | Batman & Robin              | 1997 |         0 |
+|      23 | Batman Begins               | 2005 |         0 |
+|      24 | Amadeus                     | 1984 |         8 |
++---------+-----------------------------+------+-----------+
+13 rows in set (0.00 sec)
+
+mysql> -- Question 7
+mysql> SELECT movieId, title, year, discountPrice FROM movie WHERE discountPrice BETWEEN 15 AND 20;
++---------+--------------------+------+---------------+
+| movieId | title              | year | discountPrice |
++---------+--------------------+------+---------------+
+|       3 | Dirty Harry        | 1971 |         16.99 |
+|       9 | Gone with the Wind | 1939 |         17.99 |
+|      22 | Batman & Robin     | 1997 |         15.99 |
++---------+--------------------+------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> -- Question 8
+mysql> SELECT movieID, title, year, (totalNoms - awardsWon) as nominatedButNotWon FROM movie;
++---------+-----------------------------+------+--------------------+
+| movieID | title                       | year | nominatedButNotWon |
++---------+-----------------------------+------+--------------------+
+|       1 | Apollo 13                   | 1995 |                  7 |
+|       2 | Casablanca                  | 1943 |                  5 |
+|       3 | Dirty Harry                 | 1971 |                  0 |
+|       4 | Few Good Men, A             | 1992 |                  4 |
+|       5 | Field of Dreams             | 1989 |                  3 |
+|       6 | Fly, The                    | 1986 |                  0 |
+|       7 | Forrest Gump                | 1994 |                  7 |
+|       8 | Godfather, The              | 1972 |                  7 |
+|       9 | Gone with the Wind          | 1939 |                  5 |
+|      10 | Jerry Maguire               | 1996 |                  4 |
+|      11 | Naked City, The             | 1948 |                  1 |
+|      12 | Sixth Sense, The            | 1999 |                  6 |
+|      13 | Sudden Impact               | 1983 |                  0 |
+|      14 | Terminator, The             | 1984 |                  0 |
+|      15 | Terminator 2:  Judgment Day | 1991 |                  2 |
+|      16 | Wizard of Oz, The           | 1939 |                  3 |
+|      17 | Tootsie                     | 1982 |                  9 |
+|      18 | Mrs. Doubtfire              | 1993 |                  0 |
+|      19 | Batman                      | 1989 |                  0 |
+|      20 | Batman Returns              | 1992 |                  2 |
+|      21 | Batman Forever              | 1995 |                  3 |
+|      22 | Batman & Robin              | 1997 |                  0 |
+|      23 | Batman Begins               | 2005 |                  1 |
+|      24 | Amadeus                     | 1984 |                  3 |
++---------+-----------------------------+------+--------------------+
+24 rows in set (0.00 sec)
+
+mysql> -- Question 9
+mysql> SELECT movieID, title, year, (discountPrice - discountPrice*.10) as myPrice FROM movie;
++---------+-----------------------------+------+---------+
+| movieID | title                       | year | myPrice |
++---------+-----------------------------+------+---------+
+|       1 | Apollo 13                   | 1995 |  8.9910 |
+|       2 | Casablanca                  | 1943 | 13.4910 |
+|       3 | Dirty Harry                 | 1971 | 15.2910 |
+|       4 | Few Good Men, A             | 1992 |  8.9910 |
+|       5 | Field of Dreams             | 1989 |  8.9910 |
+|       6 | Fly, The                    | 1986 | 13.4910 |
+|       7 | Forrest Gump                | 1994 |  8.9910 |
+|       8 | Godfather, The              | 1972 |  8.9910 |
+|       9 | Gone with the Wind          | 1939 | 16.1910 |
+|      10 | Jerry Maguire               | 1996 |  8.9910 |
+|      11 | Naked City, The             | 1948 | 26.9910 |
+|      12 | Sixth Sense, The            | 1999 |  8.9910 |
+|      13 | Sudden Impact               | 1983 |  8.9910 |
+|      14 | Terminator, The             | 1984 |  8.9910 |
+|      15 | Terminator 2:  Judgment Day | 1991 |  7.1910 |
+|      16 | Wizard of Oz, The           | 1939 | 20.6910 |
+|      17 | Tootsie                     | 1982 | 13.4910 |
+|      18 | Mrs. Doubtfire              | 1993 | 13.4910 |
+|      19 | Batman                      | 1989 | 22.4910 |
+|      20 | Batman Returns              | 1992 | 22.4910 |
+|      21 | Batman Forever              | 1995 | 22.4910 |
+|      22 | Batman & Robin              | 1997 | 14.3910 |
+|      23 | Batman Begins               | 2005 |  8.9910 |
+|      24 | Amadeus                     | 1984 | 13.4910 |
++---------+-----------------------------+------+---------+
+24 rows in set (0.00 sec)
+
+mysql> -- Question 10
+mysql> SELECT sex, COUNT(sex) as count from actor GROUP BY sex;
+ERROR 1054 (42S22): Unknown column 'sex' in 'field list'
+mysql> SELECT sex, COUNT(sex) as Count from actor GROUP by sex;
+ERROR 1054 (42S22): Unknown column 'sex' in 'field list'
+mysql> SELECT gender, COUNT(gender) as Count from actor GROUP by gender;
++--------+-------+
+| gender | Count |
++--------+-------+
+| F      |    36 |
+| M      |    64 |
++--------+-------+
+2 rows in set (0.01 sec)
+
+mysql> -- Question 11
+mysql> SELECT totalNoms, MAX(awardsWon) as maxAwards from movie GROUP BY totalNoms ORDER BY 'maxAwards' ASC;
++-----------+-----------+
+| totalNoms | maxAwards |
++-----------+-----------+
+|         9 |         2 |
+|         8 |         3 |
+|         0 |         0 |
+|         4 |         0 |
+|         3 |         2 |
+|         1 |         1 |
+|        13 |         6 |
+|        10 |         3 |
+|        15 |        10 |
+|         5 |         2 |
+|         6 |         4 |
+|         2 |         0 |
+|        11 |         8 |
++-----------+-----------+
+13 rows in set (0.00 sec)
+
+mysql> -- Question 12
+mysql> SELECT studio, year, SUM(awardsWon) FROM movie GROUP BY studio AND year;
+ERROR 1054 (42S22): Unknown column 'studio' in 'field list'
+mysql> SELECT company, year, SUM(awardsWon) FROM movie GROUP BY company AND year;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'MOVIE.movie.company' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',"));
+    "> ;
+    "> );
+    "> ;\
+    "> ";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> SELECT company, SUM(awardsWon) FROM movie GROUP BY company AND year;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'MOVIE.movie.company' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT year, SUM(awardsWon) FROM movie GROUP BY company AND year;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'MOVIE.movie.year' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT company, year, SUM(awardsWon) FROM movie GROUP BY company, year;
++----------------------------------------------+------+----------------+
+| company                                      | year | SUM(awardsWon) |
++----------------------------------------------+------+----------------+
+| 20th Century Fox                             | 1993 |              1 |
+| Albert S. Ruddy                              | 1972 |              3 |
+| Brooksfilms Limited                          | 1986 |              1 |
+| CarolCo Pictures                             | 1991 |              4 |
+| Castle Rock Entertainment                    | 1992 |              0 |
+| Gordon Company                               | 1989 |              0 |
+| Hemdale Film                                 | 1984 |              0 |
+| Imagine Entertainment and Universal Pictures | 1995 |              2 |
+| Kennedy/Marshall/Barry Mendel                | 1999 |              0 |
+| Mark Hellinger                               | 1948 |              2 |
+| Metro-Goldwyn-Mayer                          | 1939 |              2 |
+| Mirage Punch                                 | 1982 |              1 |
+| Saul Zaentz Company                          | 1984 |              8 |
+| Selznick International Pictures              | 1939 |             10 |
+| Steve Tisch/Wendy Finerman                   | 1994 |              6 |
+| The Malpaso Company                          | 1971 |              0 |
+| The Malpaso Company                          | 1983 |              0 |
+| TriStar Pictures                             | 1996 |              1 |
+| Warner Brothers                              | 1943 |              3 |
+| Warner Brothers                              | 1989 |              1 |
+| Warner Brothers                              | 1992 |              0 |
+| Warner Brothers                              | 1995 |              0 |
+| Warner Brothers                              | 1997 |              0 |
+| Warner Brothers                              | 2005 |              0 |
++----------------------------------------------+------+----------------+
+24 rows in set (0.00 sec)
+
+mysql> -- Question 13
+mysql> SELECT actorID, lastName, firstName, middleName, suffix, birthDate FROM actor WHERE gender = "F" ORDER BY birthDate;
++---------+-------------+-----------+------------+--------+------------+
+| actorID | lastName    | firstName | middleName | suffix | birthDate  |
++---------+-------------+-----------+------------+--------+------------+
+|      68 | Blandick    | Clara     | NULL       | NULL   | 1880-06-04 |
+|      66 | Burke       | Billie    | NULL       | NULL   | 1885-08-07 |
+|      44 | McDaniel    | Hattie    | NULL       | NULL   | 1895-06-10 |
+|      67 | Hamilton    | Margaret  | NULL       | NULL   | 1902-12-09 |
+|      42 | O'Neil      | Barbara   | NULL       | NULL   | 1909-07-10 |
+|      45 | McQueen     | Butterfly | NULL       | NULL   | 1911-01-08 |
+|       8 | Bergman     | Ingrid    | NULL       | NULL   | 1913-08-29 |
+|      43 | Leigh       | Vivien    | NULL       | NULL   | 1913-11-05 |
+|      61 | Garland     | Judy      | NULL       | NULL   | 1922-06-10 |
+|      72 | Garr        | Teri      | NULL       | NULL   | 1944-12-11 |
+|      39 | Keaton      | Diane     | NULL       | NULL   | 1946-01-05 |
+|      40 | Shire       | Talia     | NULL       | NULL   | 1946-04-25 |
+|      32 | Field       | Sally     | NULL       | NULL   | 1946-11-06 |
+|      55 | Locke       | Sondra    | NULL       | NULL   | 1947-05-28 |
+|      71 | Lange       | Jessica   | NULL       | NULL   | 1949-04-20 |
+|      24 | Madigan     | Amy       | NULL       | NULL   | 1950-09-11 |
+|      77 | Basinger    | Kim       | NULL       | NULL   | 1953-12-08 |
+|       6 | Quinlan     | Kathleen  | NULL       | NULL   | 1954-11-19 |
+|      28 | Davis       | Geena     | NULL       | NULL   | 1957-01-21 |
+|      58 | Hamilton    | Linda     | NULL       | NULL   | 1957-09-26 |
+|      79 | Pfeiffer    | Michelle  | NULL       | NULL   | 1958-04-29 |
+|      99 | Berridge    | Elizabeth | NULL       | NULL   | 1962-05-02 |
+|      49 | Preston     | Kelly     | NULL       | NULL   | 1962-10-13 |
+|      20 | Moore       | Demi      | NULL       | NULL   | 1962-11-11 |
+|      90 | Macpherson  | Elle      | NULL       | NULL   | 1963-03-29 |
+|      86 | Mazar       | Debi      | NULL       | NULL   | 1964-08-15 |
+|      30 | Wright      | Robin     | NULL       | NULL   | 1966-04-08 |
+|      83 | Kidman      | Nicole    | NULL       | NULL   | 1967-06-20 |
+|      54 | Williams    | Olivia    | NULL       | NULL   | 1968-07-26 |
+|      48 | Zellweger   | Renee     | NULL       | NULL   | 1969-04-25 |
+|      88 | Thurman     | Uma       | NULL       | NULL   | 1970-04-29 |
+|      53 | Collette    | Toni      | NULL       | NULL   | 1972-11-01 |
+|      85 | Barrymore   | Drew      | NULL       | NULL   | 1975-02-22 |
+|      89 | Silverstone | Alicia    | NULL       | NULL   | 1976-10-04 |
+|      94 | Holmes      | Katie     | NULL       | NULL   | 1978-12-18 |
+|      25 | Hoffman     | Gaby      | NULL       | NULL   | 1982-01-08 |
++---------+-------------+-----------+------------+--------+------------+
+36 rows in set (0.00 sec)
+
+mysql> -- Question 14
+mysql> SELECT movieID, title, year, dvdPrice, (dvdPrice/2) as halfSale FROM movie WHERE dvdPrice >= 20;
++---------+-------------------+------+----------+-----------+
+| movieID | title             | year | dvdPrice | halfSale  |
++---------+-------------------+------+----------+-----------+
+|      11 | Naked City, The   | 1948 |    29.99 | 14.995000 |
+|      16 | Wizard of Oz, The | 1939 |    22.99 | 11.495000 |
+|      19 | Batman            | 1989 |    26.99 | 13.495000 |
+|      20 | Batman Returns    | 1992 |    26.99 | 13.495000 |
+|      21 | Batman Forever    | 1995 |    26.99 | 13.495000 |
++---------+-------------------+------+----------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> -- Question 15
+mysql> SELECT SUM(discountPrice) as sumOfDiscount FROM movie WHERE year > 1979;
++---------------+
+| sumOfDiscount |
++---------------+
+|        248.82 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> -- Question 16
+mysql> SELECT awardsWon, AVG(discoutPrice) FROM movie WHERE year < 1980 GROUP BY awardsWon;
+ERROR 1054 (42S22): Unknown column 'discoutPrice' in 'field list'
+mysql> SELECT awardsWon, AVG(discountPrice) FROM movie WHERE year < 1980 GROUP BY awardsWon;
++-----------+--------------------+
+| awardsWon | AVG(discountPrice) |
++-----------+--------------------+
+|         0 |          16.990000 |
+|         2 |          26.490000 |
+|         3 |          12.490000 |
+|        10 |          17.990000 |
++-----------+--------------------+
+4 rows in set (0.00 sec)
+
+mysql> -- Question 17
+mysql> SELECT movie.movieID, movie.title, movie.year, role.roleID, role.roleName FROM movie INNER JOIN role on movie.movieID = role.movieID WHERE role.gender = "F";
++---------+-----------------------------+------+--------+--------------------------------------+
+| movieID | title                       | year | roleID | roleName                             |
++---------+-----------------------------+------+--------+--------------------------------------+
+|      16 | Wizard of Oz, The           | 1939 |      1 | Dorothy Gale                         |
+|      16 | Wizard of Oz, The           | 1939 |      6 | Glinda, the Good Witch of the North  |
+|      16 | Wizard of Oz, The           | 1939 |      7 | The Wicked Witch of the West         |
+|      16 | Wizard of Oz, The           | 1939 |      8 | Auntie Em                            |
+|       9 | Gone with the Wind          | 1939 |     11 | Ellen O'Hara                         |
+|       9 | Gone with the Wind          | 1939 |     12 | Scarlett O'Hara                      |
+|       9 | Gone with the Wind          | 1939 |     13 | Mammy                                |
+|       9 | Gone with the Wind          | 1939 |     14 | Prissy                               |
+|       2 | Casablanca                  | 1943 |     17 | Ilsa Lund (Laszlo)                   |
+|       8 | Godfather, The              | 1972 |     33 | Kay Adams                            |
+|       8 | Godfather, The              | 1972 |     34 | Connie Corleone Rizzi                |
+|      13 | Sudden Impact               | 1983 |     36 | Jennifer Spencer                     |
+|      14 | Terminator, The             | 1984 |     39 | Sarah Connor                         |
+|       6 | Fly, The                    | 1986 |     41 | Veronica Quaife                      |
+|       5 | Field of Dreams             | 1989 |     44 | Annie Kinsella                       |
+|       5 | Field of Dreams             | 1989 |     45 | Karin Kinsella                       |
+|      15 | Terminator 2:  Judgment Day | 1991 |     48 | Sarah Connor                         |
+|       4 | Few Good Men, A             | 1992 |     53 | Lieutenant Commander JoAnne Galloway |
+|       7 | Forrest Gump                | 1994 |     58 | Jenny Curran                         |
+|       7 | Forrest Gump                | 1994 |     61 | Mrs. Gump                            |
+|       1 | Apollo 13                   | 1995 |     68 | Marilyn Lovell                       |
+|      10 | Jerry Maguire               | 1996 |     71 | Dorothy Boyd                         |
+|      10 | Jerry Maguire               | 1996 |     72 | Avery Bishop                         |
+|      12 | Sixth Sense, The            | 1999 |     75 | Lynn Sear                            |
+|      12 | Sixth Sense, The            | 1999 |     76 | Anna Crowe                           |
+|      17 | Tootsie                     | 1982 |     78 | Dorothy Michaels (Tootsie)           |
+|      17 | Tootsie                     | 1982 |     79 | Julie Nichols                        |
+|      17 | Tootsie                     | 1982 |     80 | Sandy Lester                         |
+|      18 | Mrs. Doubtfire              | 1993 |     82 | Mrs. Doubtfire                       |
+|      18 | Mrs. Doubtfire              | 1993 |     83 | Miranda Hillard                      |
+|      16 | Wizard of Oz, The           | 1939 |     93 | Elmira Gulch                         |
+|      16 | Wizard of Oz, The           | 1939 |     94 | The Wicked Witch of the East         |
+|      19 | Batman                      | 1989 |     99 | Vicki Hale                           |
+|      20 | Batman Returns              | 1992 |    104 | Catwoman                             |
+|      20 | Batman Returns              | 1992 |    105 | Selina Kyle                          |
+|      21 | Batman Forever              | 1995 |    112 | Dr. Chase Meridian                   |
+|      21 | Batman Forever              | 1995 |    115 | Sugar                                |
+|      21 | Batman Forever              | 1995 |    116 | Spice                                |
+|      22 | Batman & Robin              | 1997 |    123 | Poison Ivy                           |
+|      22 | Batman & Robin              | 1997 |    124 | Dr. Pamela Isley                     |
+|      22 | Batman & Robin              | 1997 |    125 | Batgirl                              |
+|      22 | Batman & Robin              | 1997 |    126 | Barbara Wilson                       |
+|      22 | Batman & Robin              | 1997 |    127 | Julie Madison                        |
+|      23 | Batman Begins               | 2005 |    132 | Rachel Dawes                         |
+|      24 | Amadeus                     | 1984 |    137 | Constanze Mozart                     |
++---------+-----------------------------+------+--------+--------------------------------------+
+45 rows in set (0.00 sec)
+
+mysql> -- Question 18
+mysql> SELECT roleQuote.roldID, quote.quoteID, quote.quoteName, from quote INNER JOIN roleQuote ON roleQuote.quoteID = quote.quoteID WHERE roleQuote.roleID = "1" OR roleQuote.roleID = "3";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from quote INNER JOIN roleQuote ON roleQuote.quoteID = quote.quoteID WHERE roleQ' at line 1
+mysql> SELECT roleQuote.roleID, quote.quoteID, quote.quoteName, from quote INNER JOIN roleQuote ON roleQuote.quoteID = quote.quoteID WHERE roleQuote.roleID = "1" OR roleQuote.roleID = "3";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from quote INNER JOIN roleQuote ON roleQuote.quoteID = quote.quoteID WHERE roleQ' at line 1
+mysql> SELECT rolequote.roleID, quote.quoteID, quote.quoteName, from quote INNER JOIN rolequote ON rolequote.quoteID = quote.quoteID WHERE rolequote.roleID = "1" OR rolequote.roleID = "3";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from quote INNER JOIN rolequote ON rolequote.quoteID = quote.quoteID WHERE roleq' at line 1
+mysql> SELECT rolequote.roleID, quote.quoteID, quote.quoteName, FROM quote INNER JOIN rolequote ON rolequote.quoteID = quote.quoteID WHERE rolequote.roleID = "1" OR rolequote.roleID = "3";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM quote INNER JOIN rolequote ON rolequote.quoteID = quote.quoteID WHERE roleq' at line 1
+mysql> 
+mysql> 
+mysql> SELECT rolequote.roleID, quote.quoteID, quote.quoteName FROM quote INNER JOIN rolequote ON rolequote.quoteID = quote.quoteID WHERE rolequote.roleID = "1" OR rolequote.roleID = "3";
+ERROR 1054 (42S22): Unknown column 'quote.quoteName' in 'field list'
+mysql> SELECT rolequote.roleID, quote.quoteID, quote.quoteText FROM quote INNER JOIN rolequote ON rolequote.quoteID = quote.quoteID WHERE rolequote.roleID = "1" OR rolequote.roleID = "3";
++--------+---------+-----------------------------------------------------+
+| roleID | quoteID | quoteText                                           |
++--------+---------+-----------------------------------------------------+
+|      1 |      31 | Toto, I have a feeling we're not in Kansas anymore. |
+|      1 |      33 | Lions and tigers and bears, oh my!                  |
+|      1 |      36 | There's no place like home.                         |
+|      3 |      33 | Lions and tigers and bears, oh my!                  |
++--------+---------+-----------------------------------------------------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT movie.title, NUM(role.roleID) WHERE movie.movieID = role.movieID GROUP BY movie.title WHERE COUNT > 6;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE movie.movieID = role.movieID GROUP BY movie.title WHERE COUNT > 6' at line 1
+mysql> SELECT movie.title, NUM(role.roleID) WHERE movie.movieID = role.movieID AND COUNT > 6 GROUP BY movie.title;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE movie.movieID = role.movieID AND COUNT > 6 GROUP BY movie.title' at line 1
+mysql> SELECT movie.title, NUM(role.roleID) WHERE movie.movieID = role.movieID GROUP BY movie.title WHERE COUNT(role.roleID  > 6);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE movie.movieID = role.movieID GROUP BY movie.title WHERE COUNT(role.roleID ' at line 1
+mysql> SELECT movie.title, NUM(role.roleID) WHERE movie.movieID = role.movieID GROUP BY movie.title WHERE role.roleID  > 6;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE movie.movieID = role.movieID GROUP BY movie.title WHERE role.roleID  > 6' at line 1
+mysql> 
+mysql> 
+mysql> -- Question 20
+mysql> SELECT MAX(dvdPrice) FROM movie INNER JOIN Role on movie. movieID = role.movieID WHERE role.actorID = 1;
+ERROR 1146 (42S02): Table 'MOVIE.Role' doesn't exist
+mysql> SELECT MAX(dvdPrice) FROM movie INNER JOIN role on movie. movieID = role.movieID WHERE role.actorID = 1;
++---------------+
+| MAX(dvdPrice) |
++---------------+
+|         14.99 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> quit
